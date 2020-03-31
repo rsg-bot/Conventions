@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Rocket.Surgery.Conventions.Scanners
+namespace Rocket.Surgery.Conventions
 {
     /// <summary>
     /// The convention scanner interface is used to find conventions

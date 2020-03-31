@@ -23,7 +23,7 @@ namespace Rocket.Surgery.Hosting
         /// <param name="dependencyContext">The dependency context.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>Func&lt;IHostBuilder, IRocketHostBuilder&gt;.</returns>
-        public static Func<IHostBuilder, IRocketHostBuilder> ForDependencyContext(
+        public static Func<IHostBuilder, IConventionHostBuilder> ForDependencyContext(
             DependencyContext dependencyContext,
             DiagnosticSource? diagnosticSource = null
         ) => builder =>
@@ -53,7 +53,7 @@ namespace Rocket.Surgery.Hosting
         /// <param name="dependencyContext">The dependency context.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>Func&lt;IHostBuilder, IRocketHostBuilder&gt;.</returns>
-        public static Func<IHostBuilder, IRocketHostBuilder> For(
+        public static Func<IHostBuilder, IConventionHostBuilder> For(
             DependencyContext dependencyContext,
             DiagnosticSource? diagnosticSource = null
         ) => ForDependencyContext(dependencyContext, diagnosticSource);
@@ -64,7 +64,7 @@ namespace Rocket.Surgery.Hosting
         /// <param name="appDomain">The application domain.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>Func&lt;IHostBuilder, IRocketHostBuilder&gt;.</returns>
-        public static Func<IHostBuilder, IRocketHostBuilder> ForAppDomain(
+        public static Func<IHostBuilder, IConventionHostBuilder> ForAppDomain(
             AppDomain appDomain,
             DiagnosticSource? diagnosticSource = null
         ) => builder =>
@@ -94,7 +94,7 @@ namespace Rocket.Surgery.Hosting
         /// <param name="appDomain">The application domain.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>Func&lt;IHostBuilder, IRocketHostBuilder&gt;.</returns>
-        public static Func<IHostBuilder, IRocketHostBuilder> For(
+        public static Func<IHostBuilder, IConventionHostBuilder> For(
             AppDomain appDomain,
             DiagnosticSource? diagnosticSource = null
         ) => ForAppDomain(appDomain, diagnosticSource);
@@ -105,7 +105,7 @@ namespace Rocket.Surgery.Hosting
         /// <param name="assemblies">The assemblies.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>Func&lt;IHostBuilder, IRocketHostBuilder&gt;.</returns>
-        public static Func<IHostBuilder, IRocketHostBuilder> ForAssemblies(
+        public static Func<IHostBuilder, IConventionHostBuilder> ForAssemblies(
             IEnumerable<Assembly> assemblies,
             DiagnosticSource? diagnosticSource = null
         ) => builder =>
@@ -136,7 +136,7 @@ namespace Rocket.Surgery.Hosting
         /// <param name="assemblies">The assemblies.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>Func&lt;IHostBuilder, IRocketHostBuilder&gt;.</returns>
-        public static Func<IHostBuilder, IRocketHostBuilder> For(
+        public static Func<IHostBuilder, IConventionHostBuilder> For(
             IEnumerable<Assembly> assemblies,
             DiagnosticSource? diagnosticSource = null
         ) => ForAssemblies(assemblies, diagnosticSource);

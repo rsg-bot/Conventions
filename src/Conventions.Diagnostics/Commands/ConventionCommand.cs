@@ -160,6 +160,7 @@ namespace Rocket.Surgery.Conventions.Diagnostics.Commands
         {
             var builders = _assemblyCandidateFinder.GetCandidateAssemblies(
                     "Rocket.Surgery.Conventions.Abstractions",
+                    "Rocket.Surgery.Conventions.Attributes",
                     "Rocket.Surgery.Conventions"
                 )
                .SelectMany(x => x.DefinedTypes)
@@ -179,6 +180,7 @@ namespace Rocket.Surgery.Conventions.Diagnostics.Commands
         {
             var builders = _assemblyCandidateFinder.GetCandidateAssemblies(
                     "Rocket.Surgery.Conventions.Abstractions",
+                    "Rocket.Surgery.Conventions.Attributes",
                     "Rocket.Surgery.Conventions"
                 )
                .SelectMany(x => x.DefinedTypes)
@@ -193,6 +195,7 @@ namespace Rocket.Surgery.Conventions.Diagnostics.Commands
                .ToArray();
             var candidateAssemblies = _assemblyCandidateFinder.GetCandidateAssemblies(
                     "Rocket.Surgery.Conventions.Abstractions",
+                    "Rocket.Surgery.Conventions.Attributes",
                     "Rocket.Surgery.Conventions"
                 )
                .Select(x => new AssemblyDefinition(x))

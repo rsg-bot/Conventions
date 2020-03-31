@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions.Reflection;
 
@@ -29,5 +31,33 @@ namespace Rocket.Surgery.Conventions.Scanners
             params IConvention[] conventions
         )
             : base(assemblyCandidateFinder, serviceProvider, logger) => PrependConvention(conventions);
+
+        /// <summary>
+        /// This constructor is used to forward information captured from a <see cref="UninitializedConventionScanner" />
+        /// </summary>
+        /// <param name="assemblyCandidateFinder"></param>
+        /// <param name="serviceProvider"></param>
+        /// <param name="logger"></param>
+        /// <param name="prependedConventions"></param>
+        /// <param name="appendedConventions"></param>
+        /// <param name="exceptConventions"></param>
+        /// <param name="exceptAssemblyConventions"></param>
+        internal AggregateConventionScanner(
+            IAssemblyCandidateFinder assemblyCandidateFinder,
+            IServiceProvider serviceProvider,
+            ILogger logger,
+            List<object> prependedConventions,
+            List<object> appendedConventions,
+            List<Type> exceptConventions,
+            List<Assembly> exceptAssemblyConventions
+        ) : base(
+            assemblyCandidateFinder,
+            serviceProvider,
+            logger,
+            prependedConventions,
+            appendedConventions,
+            exceptConventions,
+            exceptAssemblyConventions
+        ) { }
     }
 }

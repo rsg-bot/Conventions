@@ -19,10 +19,10 @@ namespace Rocket.Surgery.Conventions.Scanners
         private static readonly ConcurrentDictionary<Assembly, List<IConvention>> Conventions =
             new ConcurrentDictionary<Assembly, List<IConvention>>();
 
-        private readonly List<object> _prependedConventions = new List<object>();
-        private readonly List<object> _appendedConventions = new List<object>();
-        private readonly List<Type> _exceptConventions = new List<Type>();
-        private readonly List<Assembly> _exceptAssemblyConventions = new List<Assembly>();
+        private readonly List<object> _prependedConventions;
+        private readonly List<object> _appendedConventions;
+        private readonly List<Type> _exceptConventions;
+        private readonly List<Assembly> _exceptAssemblyConventions;
         private readonly IAssemblyCandidateFinder _assemblyCandidateFinder;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger _logger;
@@ -48,6 +48,30 @@ namespace Rocket.Surgery.Conventions.Scanners
                 throw new ArgumentNullException(nameof(assemblyCandidateFinder));
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             _logger = logger;
+            _prependedConventions = new List<object>();
+            _appendedConventions = new List<object>();
+            _exceptConventions = new List<Type>();
+            _exceptAssemblyConventions = new List<Assembly>();
+        }
+
+        internal ConventionScannerBase(
+            IAssemblyCandidateFinder assemblyCandidateFinder,
+            IServiceProvider serviceProvider,
+            ILogger logger,
+            List<object> prependedConventions,
+            List<object> appendedConventions,
+            List<Type> exceptConventions,
+            List<Assembly> exceptAssemblyConventions
+        )
+        {
+            _assemblyCandidateFinder = assemblyCandidateFinder ??
+                throw new ArgumentNullException(nameof(assemblyCandidateFinder));
+            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            _logger = logger;
+            _prependedConventions = prependedConventions;
+            _appendedConventions = appendedConventions;
+            _exceptConventions = exceptConventions;
+            _exceptAssemblyConventions = exceptAssemblyConventions;
         }
 
         /// <summary>
@@ -58,6 +82,7 @@ namespace Rocket.Surgery.Conventions.Scanners
         {
             var assemblies = _assemblyCandidateFinder.GetCandidateAssemblies(
                 "Rocket.Surgery.Conventions.Abstractions",
+                "Rocket.Surgery.Conventions.Attributes",
                 "Rocket.Surgery.Conventions"
             ).ToArray();
 

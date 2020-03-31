@@ -26,7 +26,8 @@ namespace Rocket.Surgery.Conventions.Tests
             );
             var items = resolver.GetCandidateAssemblies(
                     "Rocket.Surgery.Conventions",
-                    "Rocket.Surgery.Conventions.Abstractions"
+                    "Rocket.Surgery.Conventions.Abstractions",
+                    "Rocket.Surgery.Conventions.Attributes"
                 )
                .Select(x => x.GetName().Name)
                .ToArray();
@@ -65,13 +66,15 @@ namespace Rocket.Surgery.Conventions.Tests
                 Logger
             );
             var items = resolver.GetCandidateAssemblies(
-                    new[] { "Rocket.Surgery.Conventions", "Rocket.Surgery.Conventions.Abstractions" }
+                    new[] { "Rocket.Surgery.Conventions", "Rocket.Surgery.Conventions.Abstractions",
+                        "Rocket.Surgery.Conventions.Attributes" }
                 )
                .Select(x => x.GetName().Name)
                .ToArray();
             var items2 = resolver.GetCandidateAssemblies(
                     "Rocket.Surgery.Conventions",
-                    "Rocket.Surgery.Conventions.Abstractions"
+                    "Rocket.Surgery.Conventions.Abstractions",
+                    "Rocket.Surgery.Conventions.Attributes"
                 )
                .Select(x => x.GetName().Name)
                .ToArray();

@@ -71,11 +71,7 @@ namespace Rocket.Surgery.Hosting
                             new CommandLineHostedService(
                                 _,
                                 exec,
-#if NETSTANDARD2_0
-                                _.GetRequiredService<IApplicationLifetime>(),
-#else
                                 _.GetRequiredService<IHostApplicationLifetime>(),
-#endif
                                 result,
                                 hasWebHostedService
                             )

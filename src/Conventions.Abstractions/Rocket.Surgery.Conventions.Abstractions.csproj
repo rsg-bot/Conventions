@@ -9,7 +9,11 @@
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
         <PackageReference Include="System.Diagnostics.DiagnosticSource" />
         <PackageReference Include="NodaTime" />
+        <ProjectReference Include="../Conventions.Attributes/Rocket.Surgery.Conventions.Attributes.csproj" />
         <InternalsVisibleTo Include="Rocket.Surgery.Conventions" />
+        <InternalsVisibleTo Include="Rocket.Surgery.Hosting" />
+        <InternalsVisibleTo Include="Rocket.Surgery.Hosting.Abstractions" />
+        <InternalsVisibleTo Include="Rocket.Surgery.Hosting.Functions" />
         <InternalsVisibleTo Include="Rocket.Surgery.Conventions.Diagnostics" />
         <InternalsVisibleTo Include="Rocket.Surgery.Conventions.TestHost" />
         <InternalsVisibleTo Include="Rocket.Surgery.Conventions.Tests" />

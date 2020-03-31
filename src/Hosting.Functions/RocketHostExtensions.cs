@@ -9,6 +9,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
@@ -66,7 +67,7 @@ namespace Rocket.Surgery.Hosting.Functions
         public static IWebJobsBuilder UseRocketSurgery(
             this IWebJobsBuilder builder,
             [NotNull] object startupInstance,
-            [NotNull] IRocketEnvironment environment,
+            [NotNull] IHostEnvironment environment,
             [NotNull] Action<IRocketFunctionHostBuilder> action
         )
         {
@@ -147,7 +148,7 @@ namespace Rocket.Surgery.Hosting.Functions
             this IWebJobsBuilder builder,
             [NotNull] object startupInstance,
             [NotNull] Func<IWebJobsBuilder, object, IRocketFunctionHostBuilder> func,
-            [NotNull] IRocketEnvironment environment,
+            [NotNull] IHostEnvironment environment,
             [NotNull] Action<IRocketFunctionHostBuilder> action
         )
         {
@@ -239,7 +240,7 @@ namespace Rocket.Surgery.Hosting.Functions
             this IWebJobsBuilder builder,
             [NotNull] object startupInstance,
             [NotNull] Func<IWebJobsBuilder, object, IRocketFunctionHostBuilder> func,
-            [NotNull] IRocketEnvironment environment,
+            [NotNull] IHostEnvironment environment,
             [NotNull] Action<IRocketFunctionHostBuilder> action
         )
         {
@@ -406,7 +407,7 @@ namespace Rocket.Surgery.Hosting.Functions
         /// <returns>IRocketFunctionHostBuilder.</returns>
         public static IRocketFunctionHostBuilder UseEnvironment(
             [NotNull] this IRocketFunctionHostBuilder builder,
-            [NotNull] IRocketEnvironment environment
+            [NotNull] IHostEnvironment environment
         )
         {
             if (builder == null)
@@ -551,7 +552,7 @@ namespace Rocket.Surgery.Hosting.Functions
         internal static RocketFunctionHostBuilder GetOrCreateBuilder(
             IRocketFunctionHostBuilder builder,
             object startupInstance,
-            IRocketEnvironment? environment
+            IHostEnvironment? environment
         ) => GetOrCreateBuilder(builder.Builder, startupInstance, environment);
 
         /// <summary>
@@ -564,7 +565,7 @@ namespace Rocket.Surgery.Hosting.Functions
         internal static RocketFunctionHostBuilder GetOrCreateBuilder(
             IWebJobsBuilder builder,
             object startupInstance,
-            IRocketEnvironment? environment
+            IHostEnvironment? environment
         )
         {
             if (!Builders.TryGetValue(builder, out var conventionalBuilder))
@@ -605,41 +606,6 @@ namespace Rocket.Surgery.Hosting.Functions
                     assemblyProvider,
                     diagnosticSource,
                     properties
-                );
-                conventionalBuilder.Set(
-                    new ConfigurationOptions
-                    {
-                        ApplicationConfiguration =
-                        {
-                            b => b.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true),
-                            b => b.AddYamlFile("appsettings.yml", optional: true, reloadOnChange: true),
-                            b => b.AddYamlFile("appsettings.yaml", optional: true, reloadOnChange: true),
-                            b => b.AddIniFile("appsettings.ini", optional: true, reloadOnChange: true)
-                        },
-                        EnvironmentConfiguration =
-                        {
-                            (b, environmentName) => b.AddJsonFile(
-                                $"appsettings.{environmentName}.json",
-                                optional: true,
-                                reloadOnChange: true
-                            ),
-                            (b, environmentName) => b.AddYamlFile(
-                                $"appsettings.{environmentName}.yml",
-                                optional: true,
-                                reloadOnChange: true
-                            ),
-                            (b, environmentName) => b.AddYamlFile(
-                                $"appsettings.{environmentName}.yaml",
-                                optional: true,
-                                reloadOnChange: true
-                            ),
-                            (b, environmentName) => b.AddIniFile(
-                                $"appsettings.{environmentName}.ini",
-                                optional: true,
-                                reloadOnChange: true
-                            )
-                        }
-                    }
                 );
                 Builders.Add(builder, conventionalBuilder);
             }

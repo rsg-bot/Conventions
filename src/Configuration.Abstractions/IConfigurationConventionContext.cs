@@ -14,7 +14,7 @@ namespace Rocket.Surgery.Extensions.Configuration
     /// </summary>
     /// <seealso cref="IConventionContext" />
     /// <seealso cref="Microsoft.Extensions.Configuration.IConfigurationBuilder" />
-    public interface IConfigurationConventionContext : IConventionContext,
+    public interface IConfigConventionContext : IConventionContext,
                                                        Microsoft.Extensions.Configuration.IConfigurationBuilder
     {
         /// <summary>

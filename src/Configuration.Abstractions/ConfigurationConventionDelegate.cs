@@ -4,5 +4,5 @@ namespace Rocket.Surgery.Extensions.Configuration
     /// Delegate ConfigurationConventionDelegate
     /// </summary>
     /// <param name="context">The context.</param>
-    public delegate void ConfigurationConventionDelegate(IConfigurationConventionContext context);
+    public delegate void ConfigConventionDelegate(IConfigConventionContext context);
 }

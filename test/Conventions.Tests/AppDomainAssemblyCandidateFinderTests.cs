@@ -16,7 +16,7 @@ namespace Rocket.Surgery.Conventions.Tests
         {
             var resolver = new AppDomainAssemblyCandidateFinder(AppDomain.CurrentDomain, Logger);
             var items = resolver.GetCandidateAssemblies(
-                    new[] { "Rocket.Surgery.Conventions", "Rocket.Surgery.Conventions.Abstractions" }
+                    new[] { "Rocket.Surgery.Conventions", "Rocket.Surgery.Conventions.Abstractions", "Rocket.Surgery.Conventions.Attributes" }
                 )
                .Select(x => x.GetName().Name)
                .ToArray();

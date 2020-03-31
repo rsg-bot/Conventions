@@ -34,7 +34,7 @@ namespace Rocket.Surgery.Hosting
         /// <returns>IHostBuilder.</returns>
         public static IHostBuilder ConfigureRocketSurgery(
             [NotNull] this IHostBuilder builder,
-            [NotNull] Action<IRocketHostBuilder> action
+            [NotNull] Action<IConventionHostBuilder> action
         )
         {
             if (builder == null)
@@ -60,8 +60,8 @@ namespace Rocket.Surgery.Hosting
         /// <returns>IHostBuilder.</returns>
         public static IHostBuilder UseRocketBooster(
             [NotNull] this IHostBuilder builder,
-            [NotNull] Func<IHostBuilder, IRocketHostBuilder> func,
-            Action<IRocketHostBuilder>? action = null
+            [NotNull] Func<IHostBuilder, IConventionHostBuilder> func,
+            Action<IConventionHostBuilder>? action = null
         )
         {
             if (builder == null)
@@ -88,8 +88,8 @@ namespace Rocket.Surgery.Hosting
         /// <returns>IHostBuilder.</returns>
         public static IHostBuilder LaunchWith(
             [NotNull] this IHostBuilder builder,
-            [NotNull] Func<IHostBuilder, IRocketHostBuilder> func,
-            Action<IRocketHostBuilder>? action = null
+            [NotNull] Func<IHostBuilder, IConventionHostBuilder> func,
+            Action<IConventionHostBuilder>? action = null
         )
         {
             if (builder == null)
@@ -113,8 +113,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="builder">The builder.</param>
         /// <param name="scanner">The scanner.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseScanner(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseScanner(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] IConventionScanner scanner
         )
         {
@@ -137,8 +137,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="builder">The builder.</param>
         /// <param name="assemblyCandidateFinder">The assembly candidate finder.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseAssemblyCandidateFinder(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseAssemblyCandidateFinder(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] IAssemblyCandidateFinder assemblyCandidateFinder
         )
         {
@@ -161,8 +161,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="builder">The builder.</param>
         /// <param name="assemblyProvider">The assembly provider.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseAssemblyProvider(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseAssemblyProvider(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] IAssemblyProvider assemblyProvider
         )
         {
@@ -185,8 +185,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="builder">The builder.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseDiagnosticSource(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseDiagnosticSource(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] DiagnosticSource diagnosticSource
         )
         {
@@ -210,8 +210,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="dependencyContext">The dependency context.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseDependencyContext(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseDependencyContext(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] DependencyContext dependencyContext,
             DiagnosticSource? diagnosticSource = null
         )
@@ -226,7 +226,7 @@ namespace Rocket.Surgery.Hosting
                 throw new ArgumentNullException(nameof(dependencyContext));
             }
 
-            return RocketBooster.ForDependencyContext(dependencyContext, diagnosticSource)(builder.Builder);
+            return RocketBooster.ForDependencyContext(dependencyContext, diagnosticSource)(builder.Get<IHostBuilder>());
         }
 
         /// <summary>
@@ -236,8 +236,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="appDomain">The application domain.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseAppDomain(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseAppDomain(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] AppDomain appDomain,
             DiagnosticSource? diagnosticSource = null
         )
@@ -252,7 +252,7 @@ namespace Rocket.Surgery.Hosting
                 throw new ArgumentNullException(nameof(appDomain));
             }
 
-            return RocketBooster.ForAppDomain(appDomain, diagnosticSource)(builder.Builder);
+            return RocketBooster.ForAppDomain(appDomain, diagnosticSource)(builder.Get<IHostBuilder>());
         }
 
         /// <summary>
@@ -262,8 +262,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="assemblies">The assemblies.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseAssemblies(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseAssemblies(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] IEnumerable<Assembly> assemblies,
             DiagnosticSource? diagnosticSource = null
         )
@@ -278,7 +278,7 @@ namespace Rocket.Surgery.Hosting
                 throw new ArgumentNullException(nameof(assemblies));
             }
 
-            return RocketBooster.ForAssemblies(assemblies, diagnosticSource)(builder.Builder);
+            return RocketBooster.ForAssemblies(assemblies, diagnosticSource)(builder.Get<IHostBuilder>());
         }
 
         /// <summary>
@@ -287,8 +287,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="builder">The builder.</param>
         /// <param name="action">The action.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseDiagnosticLogging(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseDiagnosticLogging(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] Action<ILoggingBuilder> action
         )
         {
@@ -321,7 +321,7 @@ namespace Rocket.Surgery.Hosting
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseCommandLine(this IRocketHostBuilder builder)
+        public static IConventionHostBuilder UseCommandLine(this IConventionHostBuilder builder)
             => builder.UseCommandLine(x => x.SuppressStatusMessages = true);
 
         /// <summary>
@@ -330,8 +330,8 @@ namespace Rocket.Surgery.Hosting
         /// <param name="builder">The builder.</param>
         /// <param name="configureOptions">The configure options.</param>
         /// <returns>IRocketHostBuilder.</returns>
-        public static IRocketHostBuilder UseCommandLine(
-            [NotNull] this IRocketHostBuilder builder,
+        public static IConventionHostBuilder UseCommandLine(
+            [NotNull] this IConventionHostBuilder builder,
             [NotNull] Action<ConsoleLifetimeOptions> configureOptions
         )
         {
@@ -345,8 +345,8 @@ namespace Rocket.Surgery.Hosting
                 throw new ArgumentNullException(nameof(configureOptions));
             }
 
-            builder.Builder.Properties[typeof(CommandLineHostedService)] = true;
-            builder.Builder
+            builder.ServiceProperties[typeof(CommandLineHostedService)] = true;
+            builder.Get<IHostBuilder>()
                .UseConsoleLifetime()
                .ConfigureServices(services => services.Configure(configureOptions));
             return GetOrCreateBuilder(builder);
@@ -384,20 +384,12 @@ namespace Rocket.Surgery.Hosting
         }
 
         /// <summary>
-        /// Gets the conventional host builder.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        /// <returns>RocketHostBuilder.</returns>
-        internal static RocketHostBuilder GetConventionalHostBuilder(IHostBuilder builder)
-            => GetOrCreateBuilder(builder);
-
-        /// <summary>
         /// Gets the or create builder.
         /// </summary>
         /// <param name="builder">The builder.</param>
         /// <returns>RocketHostBuilder.</returns>
-        internal static RocketHostBuilder GetOrCreateBuilder(IRocketHostBuilder builder)
-            => GetOrCreateBuilder(builder.Builder);
+        internal static RocketHostBuilder GetOrCreateBuilder(IConventionHostBuilder builder)
+            => GetOrCreateBuilder(builder.Get<IHostBuilder>());
 
         /// <summary>
         /// Gets the or create builder.
@@ -406,60 +398,31 @@ namespace Rocket.Surgery.Hosting
         /// <returns>RocketHostBuilder.</returns>
         internal static RocketHostBuilder GetOrCreateBuilder(IHostBuilder builder)
         {
-            if (!Builders.TryGetValue(builder, out var conventionalBuilder))
+            var conventionHostBuilder = builder.GetConventions();
+            if (conventionHostBuilder is RocketHostBuilder rocketHostBuilder)
+            {
+                return rocketHostBuilder;
+            }
+
+            if (conventionHostBuilder is UninitializedConventionHostBuilder uninitializedHostBuilder)
             {
                 var diagnosticSource = new DiagnosticListener("Rocket.Surgery.Hosting");
                 var dependencyContext = DependencyContext.Default;
                 var logger = new DiagnosticLogger(diagnosticSource);
-                var serviceProviderDictionary = new ServiceProviderDictionary(builder.Properties);
+                var serviceProviderDictionary = uninitializedHostBuilder.ServiceProperties;
                 serviceProviderDictionary.Set<ILogger>(logger);
                 serviceProviderDictionary.Set(HostType.Live);
+                serviceProviderDictionary.Set(builder);
                 var assemblyCandidateFinder = new DependencyContextAssemblyCandidateFinder(dependencyContext, logger);
                 var assemblyProvider = new DependencyContextAssemblyProvider(dependencyContext, logger);
-                var scanner = new SimpleConventionScanner(assemblyCandidateFinder, serviceProviderDictionary, logger);
-                conventionalBuilder = new RocketHostBuilder(
-                    builder,
-                    scanner,
+                var scanner = new SimpleConventionScanner(
                     assemblyCandidateFinder,
-                    assemblyProvider,
-                    diagnosticSource,
-                    serviceProviderDictionary
-                );
-
-                conventionalBuilder.Set(
-                    new ConfigurationOptions
-                    {
-                        ApplicationConfiguration =
-                        {
-                            b => b.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true),
-                            b => b.AddYamlFile("appsettings.yml", optional: true, reloadOnChange: true),
-                            b => b.AddYamlFile("appsettings.yaml", optional: true, reloadOnChange: true),
-                            b => b.AddIniFile("appsettings.ini", optional: true, reloadOnChange: true)
-                        },
-                        EnvironmentConfiguration =
-                        {
-                            (b, environmentName) => b.AddJsonFile(
-                                $"appsettings.{environmentName}.json",
-                                optional: true,
-                                reloadOnChange: true
-                            ),
-                            (b, environmentName) => b.AddYamlFile(
-                                $"appsettings.{environmentName}.yml",
-                                optional: true,
-                                reloadOnChange: true
-                            ),
-                            (b, environmentName) => b.AddYamlFile(
-                                $"appsettings.{environmentName}.yaml",
-                                optional: true,
-                                reloadOnChange: true
-                            ),
-                            (b, environmentName) => b.AddIniFile(
-                                $"appsettings.{environmentName}.ini",
-                                optional: true,
-                                reloadOnChange: true
-                            )
-                        }
-                    }
+                    serviceProviderDictionary,
+                    logger,
+                    uninitializedHostBuilder.Scanner._appendedConventions,
+                    uninitializedHostBuilder.Scanner._prependedConventions,
+                    uninitializedHostBuilder.Scanner._exceptConventions,
+                    uninitializedHostBuilder.Scanner._exceptAssemblyConventions
                 );
 
                 var host = new RocketContext(builder);
@@ -468,13 +431,25 @@ namespace Rocket.Surgery.Hosting
                    .ConfigureHostConfiguration(host.CaptureArguments)
                    .ConfigureHostConfiguration(host.ConfigureCli)
                    .ConfigureAppConfiguration(host.ReplaceArguments)
+                   .ConfigureEnhancedConfiguration(() => serviceProviderDictionary.GetOrAdd(() => new ConfigOptions()))
                    .ConfigureAppConfiguration(host.ConfigureAppConfiguration)
                    .ConfigureServices(host.ConfigureServices)
                    .ConfigureServices(host.DefaultServices);
-                Builders.Add(builder, conventionalBuilder);
+
+                rocketHostBuilder = new RocketHostBuilder(
+                    builder,
+                    scanner,
+                    assemblyCandidateFinder,
+                    assemblyProvider,
+                    diagnosticSource,
+                    serviceProviderDictionary
+                );
+                serviceProviderDictionary[typeof(IConventionHostBuilder)] = rocketHostBuilder;
+
+                return rocketHostBuilder;
             }
 
-            return conventionalBuilder;
+            throw new NotSupportedException("Unsupported configuration");
         }
 
         /// <summary>
@@ -483,14 +458,13 @@ namespace Rocket.Surgery.Hosting
         /// <param name="builder">The builder.</param>
         /// <param name="newRocketBuilder">The new rocket builder.</param>
         /// <returns>RocketHostBuilder.</returns>
-        internal static RocketHostBuilder Swap(IRocketHostBuilder builder, RocketHostBuilder newRocketBuilder)
+        internal static IConventionHostBuilder Swap(
+            IConventionHostBuilder builder,
+            IConventionHostBuilder newRocketBuilder
+        )
         {
-            Builders.Remove(builder.Builder);
-            Builders.Add(builder.Builder, newRocketBuilder);
+            builder.Set(newRocketBuilder);
             return newRocketBuilder;
         }
-
-        private static readonly ConditionalWeakTable<IHostBuilder, RocketHostBuilder> Builders =
-            new ConditionalWeakTable<IHostBuilder, RocketHostBuilder>();
     }
 }

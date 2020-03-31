@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 
@@ -38,6 +39,6 @@ namespace Rocket.Surgery.Extensions.WebJobs
         /// Based on IHostEnvironment / IHostingEnvironment
         /// </summary>
         /// <value>The environment.</value>
-        [NotNull] IRocketEnvironment Environment { get; }
+        [NotNull] IHostEnvironment Environment { get; }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Scanners;
@@ -12,31 +13,29 @@ namespace Rocket.Surgery.Extensions.Configuration
     /// <summary>
     /// Logging Builder
     /// Implements the <see cref="ConventionContainerBuilder{TBuilder,TConvention,TDelegate}" />
-    /// Implements the <see cref="IConfigurationBuilder" />
-    /// Implements the <see cref="IConfigurationConvention" />
-    /// Implements the <see cref="IConfigurationConventionContext" />
-    /// Implements the <see cref="ConfigurationConventionDelegate" />
+    /// Implements the <see cref="IConfigBuilder" />
+    /// Implements the <see cref="IConfigConvention" />
+    /// Implements the <see cref="IConfigConventionContext" />
+    /// Implements the <see cref="ConfigConventionDelegate" />
     /// </summary>
     /// <seealso
     ///     cref="ConventionContainerBuilder{IConfigurationBuilder, IConfigurationConvention, ConfigurationConventionDelegate}" />
-    /// <seealso cref="IConfigurationBuilder" />
-    /// <seealso cref="IConfigurationConvention" />
-    /// <seealso cref="IConfigurationConventionContext" />
-    /// <seealso cref="ConfigurationConventionDelegate" />
-    public sealed class ConfigurationBuilder :
-        ConventionContainerBuilder<IConfigurationBuilder, IConfigurationConvention, ConfigurationConventionDelegate>,
-        IConfigurationBuilder,
-        IConfigurationConventionContext
+    /// <seealso cref="IConfigBuilder" />
+    /// <seealso cref="IConfigConvention" />
+    /// <seealso cref="IConfigConventionContext" />
+    /// <seealso cref="ConfigConventionDelegate" />
+    public sealed class ConfigBuilder :
+        ConventionContainerBuilder<ConfigBuilder, IConfigConvention, ConfigConventionDelegate>,
+        IConfigConventionContext
     {
         private readonly IMsftConfigurationBuilder _builder = new MsftConfigurationBuilder();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationBuilder" /> class.
+        /// Initializes a new instance of the <see cref="ConfigBuilder" /> class.
         /// </summary>
         /// <param name="scanner">The scanner.</param>
         /// <param name="environment">The environment.</param>
         /// <param name="configuration">The configuration.</param>
-        /// <param name="builder">The builder.</param>
         /// <param name="diagnosticSource">The diagnostic source.</param>
         /// <param name="properties">The properties.</param>
         /// <exception cref="ArgumentNullException">
@@ -48,16 +47,14 @@ namespace Rocket.Surgery.Extensions.Configuration
         /// or
         /// diagnosticSource
         /// </exception>
-        public ConfigurationBuilder(
+        public ConfigBuilder(
             IConventionScanner scanner,
-            IRocketEnvironment environment,
+            IHostEnvironment environment,
             IConfiguration configuration,
-            IMsftConfigurationBuilder builder,
             ILogger diagnosticSource,
             IDictionary<object, object?> properties
         ) : base(scanner, properties)
         {
-            ApplicationConfigurationBuilder = builder ?? throw new ArgumentNullException(nameof(builder));
             Environment = environment;
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
             Logger = diagnosticSource ?? throw new ArgumentNullException(nameof(diagnosticSource));
@@ -67,13 +64,7 @@ namespace Rocket.Surgery.Extensions.Configuration
         /// Gets the environment.
         /// </summary>
         /// <value>The environment.</value>
-        public IRocketEnvironment Environment { get; }
-
-        /// <summary>
-        /// Gets the configuration builder for the application (this one is self contained)
-        /// </summary>
-        /// <value>The configuration.</value>
-        public IMsftConfigurationBuilder ApplicationConfigurationBuilder { get; }
+        public IHostEnvironment Environment { get; }
 
         /// <summary>
         /// Gets the configuration.
@@ -92,7 +83,7 @@ namespace Rocket.Surgery.Extensions.Configuration
         /// </summary>
         public IConfigurationRoot Build()
         {
-            Composer.Register(Scanner, this, typeof(IConfigurationConvention), typeof(ConfigurationConventionDelegate));
+            Composer.Register(Scanner, this, typeof(IConfigConvention), typeof(ConfigConventionDelegate));
             return _builder.Build();
         }
 

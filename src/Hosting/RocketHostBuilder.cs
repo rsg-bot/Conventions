@@ -14,7 +14,7 @@ namespace Rocket.Surgery.Hosting
     /// </summary>
     /// <seealso cref="ConventionHostBuilder{IRocketHostBuilder}" />
     /// <seealso cref="IRocketHostBuilder" />
-    internal class RocketHostBuilder : ConventionHostBuilder<IRocketHostBuilder>, IRocketHostBuilder
+    internal class RocketHostBuilder : ConventionHostBuilder<RocketHostBuilder>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RocketHostBuilder" /> class.

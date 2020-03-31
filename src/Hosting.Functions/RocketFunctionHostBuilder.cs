@@ -10,14 +10,13 @@ using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Hosting.Internal;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
 using Rocket.Surgery.Conventions.Scanners;
 using Rocket.Surgery.Extensions.Configuration;
 using Rocket.Surgery.Extensions.DependencyInjection;
 using Rocket.Surgery.Extensions.WebJobs;
-using ConfigurationBuilder = Rocket.Surgery.Extensions.Configuration.ConfigurationBuilder;
-using MsftConfigurationBuilder = Microsoft.Extensions.Configuration.ConfigurationBuilder;
 
 namespace Rocket.Surgery.Hosting.Functions
 {
@@ -31,7 +30,7 @@ namespace Rocket.Surgery.Hosting.Functions
     internal class RocketFunctionHostBuilder : ConventionHostBuilder<IRocketFunctionHostBuilder>,
                                                IRocketFunctionHostBuilder
     {
-        private static IRocketEnvironment CreateEnvironment()
+        private static IHostEnvironment CreateEnvironment()
         {
             var environmentNames = new[]
             {
@@ -47,16 +46,17 @@ namespace Rocket.Surgery.Hosting.Functions
                 "Functions"
             };
 
-            return new RocketEnvironment(
-                environmentNames.First(x => !string.IsNullOrEmpty(x)),
-                applicationNames.First(x => !string.IsNullOrEmpty(x)),
-                null,
-                null
-            );
+            return new HostEnvironment()
+            {
+                ApplicationName = applicationNames.First(x => !string.IsNullOrEmpty(x)),
+                EnvironmentName = environmentNames.First(x => !string.IsNullOrEmpty(x)),
+                ContentRootPath = null,
+                ContentRootFileProvider = null
+            };
         }
 
         private readonly object _startupInstance;
-        private readonly IRocketEnvironment _environment;
+        private readonly IHostEnvironment _environment;
         private readonly DiagnosticLogger _logger;
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Rocket.Surgery.Hosting.Functions
             IWebJobsBuilder builder,
             Assembly functionsAssembly,
             object startupInstance,
-            IRocketEnvironment environment,
+            IHostEnvironment environment,
             IConventionScanner scanner,
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IAssemblyProvider assemblyProvider,
@@ -181,7 +181,7 @@ namespace Rocket.Surgery.Hosting.Functions
         /// </summary>
         /// <param name="environment">The environment.</param>
         /// <returns>RocketFunctionHostBuilder.</returns>
-        internal RocketFunctionHostBuilder With(IRocketEnvironment environment) => new RocketFunctionHostBuilder(
+        internal RocketFunctionHostBuilder With(IHostEnvironment environment) => new RocketFunctionHostBuilder(
             Builder,
             FunctionsAssembly,
             _startupInstance,
@@ -206,11 +206,11 @@ namespace Rocket.Surgery.Hosting.Functions
             var existingConfiguration = Builder.Services.First(z => z.ServiceType == typeof(IConfiguration))
                .ImplementationInstance as IConfiguration;
 
-            var configurationOptions = this.GetOrAdd(() => new ConfigurationOptions());
+            var configurationOptions = this.GetOrAdd(() => new ConfigOptions());
 
-            var configurationBuilder = new MsftConfigurationBuilder()
+            var configurationBuilder = new ConfigurationBuilder()
                .SetBasePath(currentDirectory)
-               .AddConfiguration(existingConfiguration)
+               .AddConfiguration(existingConfiguration, false)
                .Apply(configurationOptions.ApplicationConfiguration)
                .Apply(configurationOptions.EnvironmentConfiguration, _environment.EnvironmentName)
                .Apply(configurationOptions.EnvironmentConfiguration, "local");
@@ -246,12 +246,13 @@ namespace Rocket.Surgery.Hosting.Functions
                 ? configurationBuilder.Sources.Count - 1
                 : configurationBuilder.Sources.IndexOf(source);
 
-            var cb = new ConfigurationBuilder(
+            var cb = new ConfigBuilder(
                 Scanner,
                 _environment,
-                new MsftConfigurationBuilder().AddConfiguration(existingConfiguration!)
-                   .AddConfiguration(configurationBuilder.Build()).Build(),
-                configurationBuilder,
+                new ConfigurationBuilder()
+                   .AddConfiguration(existingConfiguration, false)
+                   .AddConfiguration(configurationBuilder.Build(), true)
+                   .Build(),
                 _logger,
                 Properties
             );
@@ -260,7 +261,8 @@ namespace Rocket.Surgery.Hosting.Functions
                 index + 1,
                 new ChainedConfigurationSource
                 {
-                    Configuration = cb.Build()
+                    Configuration = cb.Build(),
+                    ShouldDisposeConfiguration = true
                 }
             );
 

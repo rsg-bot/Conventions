@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
@@ -13,19 +14,17 @@ namespace Rocket.Surgery.Extensions.WebJobs
     /// <summary>
     /// WebJobsConventionBuilder.
     /// Implements the <see cref="ConventionBuilder{TBuilder,TConvention,TDelegate}" />
-    /// Implements the <see cref="IWebJobsConventionBuilder" />
     /// Implements the <see cref="IWebJobsConvention" />
     /// Implements the <see cref="IWebJobsConventionContext" />
     /// Implements the <see cref="WebJobsConventionDelegate" />
     /// </summary>
     /// <seealso cref="ConventionBuilder{IWebJobsConventionBuilder, IWebJobsConvention, WebJobsConventionDelegate}" />
-    /// <seealso cref="IWebJobsConventionBuilder" />
     /// <seealso cref="IWebJobsConvention" />
     /// <seealso cref="IWebJobsConventionContext" />
     /// <seealso cref="WebJobsConventionDelegate" />
     public class WebJobsConventionBuilder :
-        ConventionBuilder<IWebJobsConventionBuilder, IWebJobsConvention, WebJobsConventionDelegate>,
-        IWebJobsConventionBuilder
+        ConventionBuilder<WebJobsConventionBuilder, IWebJobsConvention, WebJobsConventionDelegate>,
+        IWebJobsConventionContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="WebJobsConventionBuilder" /> class.
@@ -55,7 +54,7 @@ namespace Rocket.Surgery.Extensions.WebJobs
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IWebJobsBuilder webJobsBuilder,
             IConfiguration configuration,
-            IRocketEnvironment environment,
+            IHostEnvironment environment,
             ILogger diagnosticSource,
             IDictionary<object, object?> properties
         )
@@ -107,6 +106,6 @@ namespace Rocket.Surgery.Extensions.WebJobs
         /// Based on IHostEnvironment / IHostingEnvironment
         /// </summary>
         /// <value>The environment.</value>
-        public IRocketEnvironment Environment { get; }
+        public IHostEnvironment Environment { get; }
     }
 }

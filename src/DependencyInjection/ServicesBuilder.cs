@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
@@ -54,7 +55,7 @@ namespace Rocket.Surgery.Extensions.DependencyInjection
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IServiceCollection services,
             IConfiguration configuration,
-            IRocketEnvironment environment,
+            IHostEnvironment environment,
             ILogger diagnosticSource,
             IDictionary<object, object?> properties
         )
@@ -119,6 +120,6 @@ namespace Rocket.Surgery.Extensions.DependencyInjection
         /// Based on IHostEnvironment / IHostingEnvironment
         /// </summary>
         /// <value>The environment.</value>
-        public IRocketEnvironment Environment { get; }
+        public IHostEnvironment Environment { get; }
     }
 }

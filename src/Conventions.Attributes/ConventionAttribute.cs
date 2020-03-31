@@ -39,4 +39,6 @@ namespace Rocket.Surgery.Conventions
         /// <value>The type.</value>
         public Type Type { get; }
     }
+
+#pragma warning restore CA1040
 }

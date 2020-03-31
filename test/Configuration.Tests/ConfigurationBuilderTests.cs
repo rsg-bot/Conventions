@@ -15,13 +15,13 @@ namespace Rocket.Surgery.Extensions.Configuration.Tests
         public void Constructs()
         {
             var configuration = AutoFake.Resolve<IConfiguration>();
-            var builder = AutoFake.Resolve<ConfigurationBuilder>();
+            var builder = AutoFake.Resolve<ConfigBuilder>();
 
             builder.Logger.Should().NotBeNull();
             builder.Configuration.Should().NotBeNull();
 
             builder.Configuration.Should().BeSameAs(configuration);
-            Action a = () => { builder.AppendConvention(A.Fake<IConfigurationConvention>()); };
+            Action a = () => { builder.AppendConvention(A.Fake<IConfigConvention>()); };
             a.Should().NotThrow();
             a = () => { builder.AppendDelegate(delegate { }); };
             a.Should().NotThrow();
@@ -30,7 +30,7 @@ namespace Rocket.Surgery.Extensions.Configuration.Tests
         [Fact]
         public void BuildsSafely()
         {
-            var builder = AutoFake.Resolve<ConfigurationBuilder>();
+            var builder = AutoFake.Resolve<ConfigBuilder>();
 
             Action a = () => builder.Build();
             a.Should().NotThrow();

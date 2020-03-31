@@ -60,7 +60,7 @@ namespace Rocket.Surgery.Hosting.AspNetCore.Tests
         public void Should_Build_The_Host_Correctly()
         {
             var serviceConventionFake = A.Fake<IServiceConvention>();
-            var configurationConventionFake = A.Fake<IConfigurationConvention>();
+            var configurationConventionFake = A.Fake<IConfigConvention>();
 
             var builder = Host.CreateDefaultBuilder(Array.Empty<string>())
                .ConfigureWebHostDefaults(x => x.UseStartup<TestStartup>().UseTestServer())
@@ -93,7 +93,7 @@ namespace Rocket.Surgery.Hosting.AspNetCore.Tests
         public async Task Should_Run_The_Cli()
         {
             var serviceConventionFake = A.Fake<IServiceConvention>();
-            var configurationConventionFake = A.Fake<IConfigurationConvention>();
+            var configurationConventionFake = A.Fake<IConfigConvention>();
 
             var builder = Host.CreateDefaultBuilder(new[] { "myself" })
                .ConfigureWebHostDefaults(x => x.UseStartup<MyStartup>().UseTestServer())

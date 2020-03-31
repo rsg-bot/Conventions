@@ -1,4 +1,5 @@
-﻿using Rocket.Surgery.Conventions;
+﻿using Microsoft.Extensions.Hosting;
+using Rocket.Surgery.Conventions;
 
 namespace Rocket.Surgery.Hosting
 {
@@ -7,5 +8,12 @@ namespace Rocket.Surgery.Hosting
     /// Implements the <see cref="IConventionContext" />
     /// </summary>
     /// <seealso cref="IConventionContext" />
-    public interface IHostingConventionContext : IConventionContext, IRocketHostBuilder { }
+    public interface IHostingConventionContext : IConventionContext
+    {
+        /// <summary>
+        /// Gets the builder.
+        /// </summary>
+        /// <value>The builder.</value>
+        IHostBuilder Builder { get; }
+    }
 }

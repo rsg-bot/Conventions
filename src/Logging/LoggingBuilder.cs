@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Rocket.Surgery.Conventions;
 using Rocket.Surgery.Conventions.Reflection;
@@ -22,8 +23,7 @@ namespace Rocket.Surgery.Extensions.Logging
     /// <seealso cref="ILoggingConvention" />
     /// <seealso cref="ILoggingConventionContext" />
     /// <seealso cref="LoggingConventionDelegate" />
-    public class LoggingBuilder : ConventionBuilder<ILoggingBuilder, ILoggingConvention, LoggingConventionDelegate>,
-                                  ILoggingBuilder,
+    public class LoggingBuilder : ConventionBuilder<LoggingBuilder, ILoggingConvention, LoggingConventionDelegate>,
                                   ILoggingConventionContext
     {
         /// <summary>
@@ -51,7 +51,7 @@ namespace Rocket.Surgery.Extensions.Logging
             IAssemblyProvider assemblyProvider,
             IAssemblyCandidateFinder assemblyCandidateFinder,
             IServiceCollection services,
-            IRocketEnvironment environment,
+            IHostEnvironment environment,
             IConfiguration configuration,
             ILogger diagnosticSource,
             IDictionary<object, object?> properties
@@ -97,6 +97,6 @@ namespace Rocket.Surgery.Extensions.Logging
         /// Based on IHostEnvironment / IHostingEnvironment
         /// </summary>
         /// <value>The environment.</value>
-        public IRocketEnvironment Environment { get; }
+        public IHostEnvironment Environment { get; }
     }
 }

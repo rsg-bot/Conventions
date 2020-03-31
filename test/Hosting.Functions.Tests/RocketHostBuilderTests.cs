@@ -135,7 +135,7 @@ namespace Rocket.Surgery.Hosting.Functions.Tests
         public void Should_Build_The_Host_Correctly()
         {
             var serviceConventionFake = A.Fake<IServiceConvention>();
-            var configurationConventionFake = A.Fake<IConfigurationConvention>();
+            var configurationConventionFake = A.Fake<IConfigConvention>();
 
             var startup = new Startup();
             var builder = new WebJobsBuilder()

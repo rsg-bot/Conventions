@@ -5,7 +5,8 @@
         <PackageTags>$(PackageTags);config;configuration</PackageTags>
     </PropertyGroup>
     <ItemGroup>
-        <ProjectReference Include="..\Conventions.Abstractions\Rocket.Surgery.Conventions.Abstractions.csproj" />
+        <ProjectReference Include="..\Conventions.Attributes\Rocket.Surgery.Conventions.Attributes.csproj" />
+        <InternalsVisibleTo Include="Rocket.Surgery.Extensions.Configuration" />
         <InternalsVisibleTo Include="Rocket.Surgery.Hosting" />
         <InternalsVisibleTo Include="Rocket.Surgery.Hosting.Functions" />
         <InternalsVisibleTo Include="Rocket.Surgery.Conventions.TestHost" />

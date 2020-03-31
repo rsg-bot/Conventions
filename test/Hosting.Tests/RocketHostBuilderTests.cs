@@ -166,7 +166,7 @@ namespace Rocket.Surgery.Hosting.Tests
             builder.Build();
             A.CallTo(
                 () => AutoFake.Resolve<IConventionScanner>().AppendDelegate(
-                    A<Delegate[]>.That.Matches(z => z[0].GetType() == typeof(ConfigurationConventionDelegate))
+                    A<Delegate[]>.That.Matches(z => z[0].GetType() == typeof(ConfigConventionDelegate))
                 )
             ).MustHaveHappened();
         }
@@ -232,7 +232,7 @@ namespace Rocket.Surgery.Hosting.Tests
         public void Should_Build_The_Host_Correctly()
         {
             var serviceConventionFake = A.Fake<IServiceConvention>();
-            var configurationConventionFake = A.Fake<IConfigurationConvention>();
+            var configurationConventionFake = A.Fake<IConfigConvention>();
             var commandLineConventionFake = A.Fake<ICommandLineConvention>();
 
             var builder = Host.CreateDefaultBuilder()

@@ -1,5 +1,6 @@
 using System;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Hosting;
 
 #pragma warning disable CS8601 // Possible null reference assignment.
 
@@ -10,6 +11,26 @@ namespace Rocket.Surgery.Conventions
     /// </summary>
     public static class ConventionHostBuilderExtensions
     {
+        /// <summary>
+        /// Gets the convention host builder or creates one of it's missing.
+        /// </summary>
+        /// <param name="hostBuilder"></param>
+        /// <returns></returns>
+        public static IConventionHostBuilder GetConventions(this IHostBuilder hostBuilder)
+        {
+            if (hostBuilder.Properties.TryGetValue(
+                typeof(IConventionHostBuilder),
+                out var value
+            ) && value is IConventionHostBuilder conventionHostBuilder)
+            {
+                return conventionHostBuilder;
+            }
+
+            conventionHostBuilder = new UninitializedConventionHostBuilder(hostBuilder.Properties);
+            hostBuilder.Properties.Add(typeof(IConventionHostBuilder), conventionHostBuilder);
+            return conventionHostBuilder;
+        }
+
         /// <summary>
         /// Get a value by type from the context
         /// </summary>

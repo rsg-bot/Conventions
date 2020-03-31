@@ -7,8 +7,8 @@ namespace Rocket.Surgery.Conventions
     /// </summary>
 #pragma warning disable CA1040
     public interface IConvention { }
-#pragma warning restore CA1040
-
+#pragma warning enable CA1040
+    
     /// <summary>
     /// A default interface that can be used to create a convention with a known context type
     /// context is used to house all the data that the convention requires to do it's job

@@ -50,7 +50,7 @@ namespace Rocket.Surgery.Hosting.Tests
                .ConfigureRocketSurgery(
                     c =>
                     {
-                        var options = c.GetOrAdd(() => new ConfigurationOptions());
+                        var options = c.GetOrAdd(() => new ConfigOptions());
                         options.EnvironmentConfiguration.Clear();
                     }
                 );
