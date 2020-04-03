@@ -3,7 +3,6 @@
         <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
         <PackageDescription>Provides a ConventionHostBuilder that can be used during unit tests or anywhere else you wouldn't bootstrap an entire application</PackageDescription>
         <PackageTags>$(PackageTags);reflection;unit test;testhost</PackageTags>
-        <NoWarn>$(NoWarn);CS0436</NoWarn>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" />

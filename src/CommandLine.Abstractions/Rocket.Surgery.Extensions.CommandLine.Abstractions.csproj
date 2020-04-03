@@ -8,7 +8,8 @@
         <ProjectReference Include="..\Conventions.Abstractions\Rocket.Surgery.Conventions.Abstractions.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="McMaster.Extensions.CommandLineUtils" />
+        <PackageReference Include="System.CommandLine" />
+        <PackageReference Include="System.CommandLine.Rendering" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
     </ItemGroup>
 </Project>

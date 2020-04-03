@@ -8,7 +8,7 @@ namespace Rocket.Surgery.Conventions
     /// <summary>
     /// Helper method for working with <see cref="IConventionHostBuilder" />
     /// </summary>
-    public static class CommandLineHostBuilderExtensions
+    public static class CliHostBuilderExtensions
     {
         /// <summary>
         /// Configure the commandline delegate to the convention scanner
@@ -18,7 +18,7 @@ namespace Rocket.Surgery.Conventions
         /// <returns>IConventionHostBuilder.</returns>
         public static IConventionHostBuilder ConfigureCommandLine(
             [NotNull] this IConventionHostBuilder container,
-            CommandLineConventionDelegate @delegate
+            CliConventionDelegate @delegate
         )
         {
             if (container == null)

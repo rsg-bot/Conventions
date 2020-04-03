@@ -3,7 +3,7 @@
     <TargetFrameworks>netcoreapp3.1;net461</TargetFrameworks>
     <PackageDescription>Adds diagnostics command line utilities for diagnosing what conventions are available to be run</PackageDescription>
     <PackageTags>$(PackageTags);reflection;diagnostics</PackageTags>
-    <NoWarn>$(NoWarn);CS0436;CA1812</NoWarn>
+    <NoWarn>$(NoWarn);CA1812</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Conventions\Rocket.Surgery.Conventions.csproj" />

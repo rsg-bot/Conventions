@@ -204,7 +204,7 @@ namespace Rocket.Surgery.Hosting.Tests
             builder.Build();
             A.CallTo(
                 () => AutoFake.Resolve<IConventionScanner>().AppendDelegate(
-                    A<Delegate[]>.That.Matches(z => z[0].GetType() == typeof(CommandLineConventionDelegate))
+                    A<Delegate[]>.That.Matches(z => z[0].GetType() == typeof(CliConventionDelegate))
                 )
             ).MustHaveHappened();
         }
@@ -233,7 +233,7 @@ namespace Rocket.Surgery.Hosting.Tests
         {
             var serviceConventionFake = A.Fake<IServiceConvention>();
             var configurationConventionFake = A.Fake<IConfigConvention>();
-            var commandLineConventionFake = A.Fake<ICommandLineConvention>();
+            var commandLineConventionFake = A.Fake<ICliConvention>();
 
             var builder = Host.CreateDefaultBuilder()
                .ConfigureRocketSurgery(
@@ -272,8 +272,8 @@ namespace Rocket.Surgery.Hosting.Tests
                             new DefaultAssemblyProvider(new[] { typeof(RocketHostBuilderTests).Assembly })
                         )
                        .AppendDelegate(
-                            new CommandLineConventionDelegate(c => c.OnRun(state => 1337)),
-                            new CommandLineConventionDelegate(c => c.OnRun(state => 1337))
+                            new CliConventionDelegate(c => c.OnRun(state => 1337)),
+                            new CliConventionDelegate(c => c.OnRun(state => 1337))
                         )
                 );
 
@@ -293,9 +293,9 @@ namespace Rocket.Surgery.Hosting.Tests
                        .UseAssemblyProvider(
                             new DefaultAssemblyProvider(new[] { typeof(RocketHostBuilderTests).Assembly })
                         )
-                       .AppendDelegate(new CommandLineConventionDelegate(c => c.OnRun(state => 1337)))
+                       .AppendDelegate(new CliConventionDelegate(c => c.OnRun(state => 1337)))
                        .AppendDelegate(
-                            new CommandLineConventionDelegate(context => context.AddCommand<MyCommand>("myself"))
+                            new CliConventionDelegate(context => context.AddCommand<MyCommand>("myself"))
                         )
                 );
 

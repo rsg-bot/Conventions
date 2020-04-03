@@ -112,9 +112,9 @@ namespace Rocket.Surgery.Hosting.AspNetCore.Tests
                        .UseAssemblyProvider(
                             new DefaultAssemblyProvider(new[] { typeof(RocketWebHostBuilderTests).Assembly })
                         )
-                       .AppendDelegate(new CommandLineConventionDelegate(c => c.OnRun(state => Task.FromResult(1337))))
+                       .AppendDelegate(new CliConventionDelegate(c => c.OnRun(state => Task.FromResult(1337))))
                        .AppendDelegate(
-                            new CommandLineConventionDelegate(
+                            new CliConventionDelegate(
                                 context => context.AddCommand<MyCommand>("myself", v => { })
                             )
                         )

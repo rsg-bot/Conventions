@@ -590,57 +590,6 @@ namespace Rocket.Surgery.Conventions.Diagnostics.Commands
         public TypeInfo ConventionType { get; }
         public TypeInfo DelegateType { get; }
         public override string ToString() => Name;
-    }
-
-    /// <summary>
-    /// DumpCommand.
-    /// </summary>
-    [UsedImplicitly]
-    [Command("conventions", "convention", Description = "Convention Diagnostics")]
-    [Subcommand(typeof(ConventionListCommand))]
-    internal class ConventionCommand
-    {
-        private readonly CommandLineApplication _application;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConventionCommand" /> class.
-        /// </summary>
-        /// <param name="application">The application.</param>
-        public ConventionCommand(CommandLineApplication application) => _application = application;
-
-        /// <summary>
-        /// Called when [execute].
-        /// </summary>
-        /// <returns>System.Int32.</returns>
-        public int OnExecute()
-        {
-            _application.ShowHelp();
-            return 0;
-        }
-    }
-
-    /// <summary>
-    /// A common diagnostics command to attach multiple commands to.
-    /// </summary>
-    [Command("diagnostics", "diag", Description = "Convention Diagnostics")]
-    public class DiagnosticsCommand
-    {
-        private readonly CommandLineApplication _application;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DiagnosticsCommand" /> class.
-        /// </summary>
-        /// <param name="application">The application.</param>
-        public DiagnosticsCommand(CommandLineApplication application) => _application = application;
-
-        /// <summary>
-        /// Called when [execute].
-        /// </summary>
-        /// <returns>System.Int32.</returns>
-        public int OnExecute()
-        {
-            _application.ShowHelp();
-            return 0;
-        }
+    
     }
 }

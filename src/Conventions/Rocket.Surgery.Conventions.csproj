@@ -3,7 +3,6 @@
         <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
         <PackageDescription>Adds support for loading configuration, services, logging, command line and more via simple and easy to setup assembly attributes</PackageDescription>
         <PackageTags>$(PackageTags);reflection</PackageTags>
-        <NoWarn>$(NoWarn);CS0436</NoWarn>
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Conventions.Abstractions\Rocket.Surgery.Conventions.Abstractions.csproj" />

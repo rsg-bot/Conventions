@@ -4,5 +4,5 @@ namespace Rocket.Surgery.Extensions.CommandLine
     /// Delegate CommandLineConventionDelegate
     /// </summary>
     /// <param name="context">The context.</param>
-    public delegate void CommandLineConventionDelegate(ICommandLineConventionContext context);
+    public delegate void CliConventionDelegate(ICliConventionContext context);
 }

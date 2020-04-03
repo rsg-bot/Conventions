@@ -7,5 +7,5 @@ namespace Rocket.Surgery.Extensions.CommandLine
     /// Implements the <see cref="IConvention{TContext}" />
     /// </summary>
     /// <seealso cref="IConvention{ICommandLineConventionContext}" />
-    public interface ICommandLineConvention : IConvention<ICommandLineConventionContext> { }
+    public interface ICliConvention : IConvention<ICliConventionContext> { }
 }

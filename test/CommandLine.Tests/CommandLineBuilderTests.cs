@@ -40,9 +40,9 @@ namespace Rocket.Surgery.Extensions.CommandLine.Tests
 
             builder.AssemblyProvider.Should().BeSameAs(assemblyProvider);
             builder.AssemblyCandidateFinder.Should().NotBeNull();
-            Action a = () => { builder.PrependConvention(A.Fake<ICommandLineConvention>()); };
+            Action a = () => { builder.PrependConvention(A.Fake<ICliConvention>()); };
             a.Should().NotThrow();
-            a = () => { builder.AppendConvention(A.Fake<ICommandLineConvention>()); };
+            a = () => { builder.AppendConvention(A.Fake<ICliConvention>()); };
             a.Should().NotThrow();
             a = () => { builder.PrependDelegate(delegate { }); };
             a.Should().NotThrow();
@@ -255,7 +255,7 @@ namespace Rocket.Surgery.Extensions.CommandLine.Tests
         {
             AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
             var builder = AutoFake.Resolve<CommandLineBuilder>();
-            var context = builder as ICommandLineConventionContext;
+            var context = builder as ICliConventionContext;
 
             var service = A.Fake<IService2>();
             A.CallTo(() => service.SomeValue).Returns("Service2");
@@ -280,7 +280,7 @@ namespace Rocket.Surgery.Extensions.CommandLine.Tests
             AutoFake.Provide(service);
 
             var builder = AutoFake.Resolve<CommandLineBuilder>();
-            var context = builder as ICommandLineConventionContext;
+            var context = builder as ICliConventionContext;
 
             context.AddCommand<ServiceInjection2>("si");
 
@@ -296,7 +296,7 @@ namespace Rocket.Surgery.Extensions.CommandLine.Tests
         {
             AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
             var builder = AutoFake.Resolve<CommandLineBuilder>();
-            var context = builder as ICommandLineConventionContext;
+            var context = builder as ICliConventionContext;
 
             var onParseBuilder = A.Fake<OnParseDelegate>();
             var onParseContext = A.Fake<OnParseDelegate>();
@@ -327,7 +327,7 @@ namespace Rocket.Surgery.Extensions.CommandLine.Tests
         {
             AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
             var builder = AutoFake.Resolve<CommandLineBuilder>();
-            var context = builder as ICommandLineConventionContext;
+            var context = builder as ICliConventionContext;
 
             context.OnRun<Default>();
             var result = builder.Build().Execute(ServiceProvider);
@@ -395,7 +395,7 @@ namespace Rocket.Surgery.Extensions.CommandLine.Tests
             AutoFake.Provide<IAssemblyProvider>(new TestAssemblyProvider());
             var builder = AutoFake.Resolve<CommandLineBuilder>();
 
-            ( builder as ICommandLineConventionContext ).OnRun(
+            ( builder as ICliConventionContext ).OnRun(
                 state => (int)( state.GetLogLevel() ?? LogLevel.Information )
             );
 

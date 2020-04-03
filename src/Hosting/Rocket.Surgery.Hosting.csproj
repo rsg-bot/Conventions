@@ -3,7 +3,6 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
     <PackageDescription>Adds helpers to easily bootstrap an application using conventions by just using the correct extension method.  This adds command line operations, additional configuration, logging and service injections by convention.</PackageDescription>
     <PackageTags>$(PackageTags);hosting;generic host</PackageTags>
-    <NoWarn>$(NoWarn);CS0436</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Conventions\Rocket.Surgery.Conventions.csproj" />
